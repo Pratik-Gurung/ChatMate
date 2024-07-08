@@ -21,7 +21,7 @@ const ChatList = () => {
       doc(db, "userchats", currentUser.id),
       async (snapshot) => {
         const userData = snapshot.data();
-        const items = userData.chats || [];
+        const items = userData?.chats || [];
 
         // Fetch additional user details for each chat
         const promises = items.map(async (item) => {
@@ -62,7 +62,6 @@ const ChatList = () => {
 
   return (
     <div className="chatList">
-
       <div className="search">
         <div className="searchBar">
           <img src="./search.png" alt="" />
@@ -89,7 +88,6 @@ const ChatList = () => {
           onClick={() => handleSelect(chat)}
           style={{ backgroundColor: chat.isSeen ? "" : "#1b9d4b" }}
         >
-
           <img
             src={chat.user.blocked.includes(currentUser.id) ? "./avatar1.jpeg" : chat.user.avatar || "./avatar.jpeg"}
             alt=""
@@ -100,7 +98,6 @@ const ChatList = () => {
           </div>
         </div>
       ))}
-
 
       {addMode && <AddUser />}
     </div>

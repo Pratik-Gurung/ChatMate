@@ -73,9 +73,49 @@
         }
       }
     }
+
+
+
+
+
+
+    .google-sign-in {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #9e862e;
+      color: #ffffff;
+      border: none;
+      border-radius: 4px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    
+    .google-sign-in:hover {
+      background-color: #7d8fad;
+    }
+    
+    .google-sign-in:disabled {
+      background-color: #a0c1f7;
+      cursor: not-allowed;
+    }
+    
+    .google-icon {
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
+    }
+    
+
+
+
+
+
     #switchlink {
       color: rgba(255, 255, 255, 0.731);
-  }
+    } 
 
-}
+  }
 }

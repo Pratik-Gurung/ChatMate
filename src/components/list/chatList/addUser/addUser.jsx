@@ -1,4 +1,4 @@
-import { arrayUnion, collection, doc, getDoc, getDocs, query, serverTimestamp, setDoc, updateDoc, where } from "firebase/firestore";
+import { arrayUnion, collection, doc, getDoc, setDoc, updateDoc, serverTimestamp, query, where, getDocs } from "firebase/firestore";
 import "./addUser.css";
 import { db } from "../../../../lib/firebase";
 import { useState } from "react";
@@ -23,12 +23,15 @@ const AddUser = () => {
       if (!querySnapShot.empty) {
         const userData = querySnapShot.docs[0].data();
         setUser(userData);
-        
+
         // Check if user is already in chatlist
-        const userChatsRef = collection(db, "userchats");
-        const userDoc = await getDoc(doc(userChatsRef, userData.id));
+        const userChatsRef = doc(db, "userchats", currentUser.id);
+        const userDoc = await getDoc(userChatsRef);
         const userChatsData = userDoc.data();
-        if (userChatsData.chats.some(chat => chat.receiverId === currentUser.id)) {
+
+        // Ensure userChatsData.chats is always an array
+        const chats = Array.isArray(userChatsData?.chats) ? userChatsData.chats : [];
+        if (chats.some(chat => chat.receiverId === userData.id)) {
           setAdded(true); // (true) if user is already in chatlist
         } else {
           setAdded(false); // Reset added state if user not in chatlist
@@ -42,7 +45,8 @@ const AddUser = () => {
   const handleAdd = async () => {
     setLoading(true);
     const chatRef = collection(db, "chats");
-    const userChatsRef = collection(db, "userchats");
+    const userChatsRef = doc(db, "userchats", currentUser.id);
+    const otherUserChatsRef = doc(db, "userchats", user.id);
 
     try {
       const newChatRef = doc(chatRef);
@@ -52,22 +56,26 @@ const AddUser = () => {
         messages: [],
       });
 
+      // Ensure the user chats documents exist
+      await setDoc(userChatsRef, { chats: arrayUnion() }, { merge: true });
+      await setDoc(otherUserChatsRef, { chats: arrayUnion() }, { merge: true });
+
       // Updating user's chats
-      await updateDoc(doc(userChatsRef, user.id), {
+      await updateDoc(userChatsRef, {
         chats: arrayUnion({
           chatId: newChatRef.id,
           lastMessage: "",
-          receiverId: currentUser.id,
+          receiverId: user.id,
           updatedAt: Date.now(),
         }),
       });
 
       // Updating current user's chats
-      await updateDoc(doc(userChatsRef, currentUser.id), {
+      await updateDoc(otherUserChatsRef, {
         chats: arrayUnion({
           chatId: newChatRef.id,
           lastMessage: "",
-          receiverId: user.id,
+          receiverId: currentUser.id,
           updatedAt: Date.now(),
         }),
       });
@@ -93,7 +101,7 @@ const AddUser = () => {
             <span>{user.username}</span>
           </div>
           <button onClick={handleAdd} disabled={loading || added}>
-            {loading ? "Loading" : added ? "Added!" : "Add User"}
+            {loading ? "Loading" : added ? "Friends!" : "Add As Friend"}
           </button>
         </div>
       )}

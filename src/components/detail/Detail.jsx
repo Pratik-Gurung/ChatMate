@@ -57,21 +57,21 @@ const Detail = () => {
           <div className="photos">
             <div className="photoItem">
               <div className="photoDetail">
-                <img src="https://express-images.franklymedia.com/9046/sites/5/2021/05/25212024/FEFFF0C6-3160-4173-BDF4-DA03A7E3D50B.jpeg" alt="" />
+                <img src="https://static.scientificamerican.com/sciam/cache/file/A8C04F01-9779-477A-B104C8D52998E12C_source.jpg?w=1200" alt="" />
                 <span>photo_2024_2.png</span>
               </div>
               <img src="./download.png" alt="" className="icon" />
             </div>
             <div className="photoItem">
               <div className="photoDetail">
-                <img src="https://express-images.franklymedia.com/9046/sites/5/2021/05/25212024/FEFFF0C6-3160-4173-BDF4-DA03A7E3D50B.jpeg" alt="" />
+                <img src="https://static.scientificamerican.com/sciam/cache/file/A8C04F01-9779-477A-B104C8D52998E12C_source.jpg?w=1200" alt="" />
                 <span>photo_2024_3.png</span>
               </div>
               <img src="./download.png" alt="" className="icon" />
             </div>
             <div className="photoItem">
               <div className="photoDetail">
-                <img src="https://express-images.franklymedia.com/9046/sites/5/2021/05/25212024/FEFFF0C6-3160-4173-BDF4-DA03A7E3D50B.jpeg" alt="" />
+                <img src="https://static.scientificamerican.com/sciam/cache/file/A8C04F01-9779-477A-B104C8D52998E12C_source.jpg?w=1200" alt="" />
                 <span>photo_2024_4.png</span>
               </div>
               <img src="./download.png" alt="" className="icon" />
